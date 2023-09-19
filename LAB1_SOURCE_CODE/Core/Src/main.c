@@ -93,13 +93,45 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  //int count = 0;
+  int cur_hour = 0;
+  int cur_minute = 0;
+  int cur_sec = 0;
 
+  int before_hour;
+  int before_minute;
+  int before_sec;
+
+  int count_sec = 0;
+  clearAllClock();
   while (1)
   {
-	  clearNumberOnClock(7);
-	  HAL_Delay(1000);
-    /* USER CODE END WHILE */
+	  before_hour = cur_hour - 1 < 0 ? 11 : cur_hour - 1;
+	  before_minute = cur_minute - 1 < 0 ? 11 : cur_minute - 1;
+	  before_sec = cur_sec - 1 < 0 ? 11 : cur_sec - 1;
+
+	  if(before_sec != cur_hour && before_sec != cur_minute && before_sec != cur_sec) clearNumberOnClock(before_sec);
+	  if(before_minute != cur_hour && before_minute != cur_sec && before_minute != cur_minute) clearNumberOnClock(before_minute);
+	  if(before_hour != cur_sec && before_hour != cur_minute && before_hour != cur_hour) clearNumberOnClock(before_hour);
+	  setNumberOnClock(cur_minute);
+	  setNumberOnClock(cur_hour);
+	  setNumberOnClock(cur_sec);
+	  before_hour = cur_hour;
+	  before_minute = cur_minute;
+	  before_sec = cur_sec;
+	  cur_sec = cur_sec + 1 > 11 ? 0 : cur_sec + 1;
+	  if(cur_sec == 0) {
+		  count_sec++;
+	  }
+	  if(count_sec == 5){
+		  cur_minute = cur_minute + 1 > 11 ? 0 : cur_minute + 1;
+		  count_sec = 0;
+		  if(cur_minute == 0){
+			  cur_hour = cur_hour + 1 > 11 ? 0 : cur_hour + 1;
+		  }
+	  }
+
+	  HAL_Delay(200);
+	/* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
   }
