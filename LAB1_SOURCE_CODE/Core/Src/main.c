@@ -91,23 +91,61 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-#define switched_count 2;
   int count = 0;
-  int LED_PIN = 1;
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, SET);
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, SET);
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, SET);
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, SET);
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, SET);
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, SET);
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, SET);
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, SET);
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, SET);
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_13, SET);
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_14, SET);
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, SET);
+
   while (1)
   {
-	  if(LED_PIN == 1){
-		  HAL_GPIO_WritePin(GPIOA , GPIO_PIN_6, SET);
-		  HAL_GPIO_WritePin(GPIOA , GPIO_PIN_5, RESET);
-	  }
-	  if(LED_PIN == 0){
-		  HAL_GPIO_WritePin(GPIOA , GPIO_PIN_5, SET);
+	  switch(count){
+	  case 0:
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, RESET);
+		  break;
+	  case 1:
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, RESET);
+		  break;
+	  case 2:
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, RESET);
+		  break;
+	  case 3:
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, RESET);
+		  break;
+	  case 4:
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, RESET);
+		  break;
+	  case 5:
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, RESET);
+		  break;
+	  case 6:
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, RESET);
+		  break;
+	  case 7:
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, RESET);
+		  break;
+	  case 8:
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, RESET);
+		  break;
+	  case 9:
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_13, RESET);
+		  break;
+	  case 10:
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_14, RESET);
+		  break;
+	  case 11:
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, RESET);
+		  break;
 	  }
-	  if(++count == 2){
-		  LED_PIN = 1 - LED_PIN;
-		  count = 0;
-	  }
+	  count++;
 	  HAL_Delay(1000);
     /* USER CODE END WHILE */
 
@@ -162,16 +200,42 @@ static void MX_GPIO_Init(void)
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5|GPIO_PIN_6, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7
+                          |GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10|GPIO_PIN_11
+                          |GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : PA5 PA6 */
-  GPIO_InitStruct.Pin = GPIO_PIN_5|GPIO_PIN_6;
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_10
+                          |GPIO_PIN_11|GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14
+                          |GPIO_PIN_15|GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_5
+                          |GPIO_PIN_6|GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_9, GPIO_PIN_RESET);
+
+  /*Configure GPIO pins : PA4 PA5 PA6 PA7
+                           PA8 PA9 PA10 PA11
+                           PA12 PA13 PA14 PA15 */
+  GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7
+                          |GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10|GPIO_PIN_11
+                          |GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PB0 PB1 PB2 PB10
+                           PB11 PB12 PB13 PB14
+                           PB15 PB3 PB4 PB5
+                           PB6 PB7 PB8 PB9 */
+  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_10
+                          |GPIO_PIN_11|GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14
+                          |GPIO_PIN_15|GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_5
+                          |GPIO_PIN_6|GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_9;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 }
 
