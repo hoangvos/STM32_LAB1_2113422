@@ -55,6 +55,7 @@ static void MX_GPIO_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 void clearAllClock();
+void setNumberOnClock(int num);
 /* USER CODE END 0 */
 
 /**
@@ -96,7 +97,7 @@ int main(void)
   while (1)
   {
 	  clearAllClock();
-
+	  setNumberOnClock(7);
 	  HAL_Delay(1000);
     /* USER CODE END WHILE */
 
@@ -204,6 +205,46 @@ void clearAllClock(){
 	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_13, SET);
 	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_14, SET);
 	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, SET);
+}
+void setNumberOnClock(int num){
+	switch(num){
+	case 0:
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, RESET);
+		break;
+	case 1:
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, RESET);
+		break;
+	case 2:
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, RESET);
+		break;
+	case 3:
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, RESET);
+		break;
+	case 4:
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, RESET);
+		break;
+	case 5:
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, RESET);
+		break;
+	case 6:
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, RESET);
+		break;
+	case 7:
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, RESET);
+		break;
+	case 8:
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, RESET);
+		break;
+	case 9:
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_13, RESET);
+		break;
+	case 10:
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_14, RESET);
+		break;
+	case 11:
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, RESET);
+		break;
+	}
 }
 /* USER CODE END 4 */
 
