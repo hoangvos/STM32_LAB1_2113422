@@ -158,13 +158,13 @@ int main(void)
  80001a2:	2120      	movs	r1, #32
  80001a4:	4821      	ldr	r0, [pc, #132]	; (800022c <main+0xe0>)
  80001a6:	f000 fc21 	bl	80009ec <HAL_GPIO_WritePin>
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, RESET);
- 80001aa:	2200      	movs	r2, #0
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, SET);
+ 80001aa:	2201      	movs	r2, #1
  80001ac:	2140      	movs	r1, #64	; 0x40
  80001ae:	481f      	ldr	r0, [pc, #124]	; (800022c <main+0xe0>)
  80001b0:	f000 fc1c 	bl	80009ec <HAL_GPIO_WritePin>
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, SET);
- 80001b4:	2201      	movs	r2, #1
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, RESET);
+ 80001b4:	2200      	movs	r2, #0
  80001b6:	2180      	movs	r1, #128	; 0x80
  80001b8:	481c      	ldr	r0, [pc, #112]	; (800022c <main+0xe0>)
  80001ba:	f000 fc17 	bl	80009ec <HAL_GPIO_WritePin>
@@ -176,13 +176,13 @@ int main(void)
  80001c2:	2120      	movs	r1, #32
  80001c4:	4819      	ldr	r0, [pc, #100]	; (800022c <main+0xe0>)
  80001c6:	f000 fc11 	bl	80009ec <HAL_GPIO_WritePin>
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, SET);
- 80001ca:	2201      	movs	r2, #1
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, RESET);
+ 80001ca:	2200      	movs	r2, #0
  80001cc:	2140      	movs	r1, #64	; 0x40
  80001ce:	4817      	ldr	r0, [pc, #92]	; (800022c <main+0xe0>)
  80001d0:	f000 fc0c 	bl	80009ec <HAL_GPIO_WritePin>
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, RESET);
- 80001d4:	2200      	movs	r2, #0
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, SET);
+ 80001d4:	2201      	movs	r2, #1
  80001d6:	2180      	movs	r1, #128	; 0x80
  80001d8:	4814      	ldr	r0, [pc, #80]	; (800022c <main+0xe0>)
  80001da:	f000 fc07 	bl	80009ec <HAL_GPIO_WritePin>
@@ -193,7 +193,7 @@ int main(void)
  80001e0:	683b      	ldr	r3, [r7, #0]
  80001e2:	3301      	adds	r3, #1
  80001e4:	603b      	str	r3, [r7, #0]
-	  if(state == 0 && count == 5){
+	  if(state == 0 && count == LED_RED_TIME){
  80001e6:	687b      	ldr	r3, [r7, #4]
  80001e8:	2b00      	cmp	r3, #0
  80001ea:	d106      	bne.n	80001fa <main+0xae>
@@ -206,12 +206,12 @@ int main(void)
  80001f6:	2300      	movs	r3, #0
  80001f8:	603b      	str	r3, [r7, #0]
 	  }
-	  if(state == 1 && count == 2){
+	  if(state == 1 && count == LED_GREEN_TIME){
  80001fa:	687b      	ldr	r3, [r7, #4]
  80001fc:	2b01      	cmp	r3, #1
  80001fe:	d106      	bne.n	800020e <main+0xc2>
  8000200:	683b      	ldr	r3, [r7, #0]
- 8000202:	2b02      	cmp	r3, #2
+ 8000202:	2b03      	cmp	r3, #3
  8000204:	d103      	bne.n	800020e <main+0xc2>
 		  state = 2; count = 0;
  8000206:	2302      	movs	r3, #2
@@ -219,12 +219,12 @@ int main(void)
  800020a:	2300      	movs	r3, #0
  800020c:	603b      	str	r3, [r7, #0]
 	  }
-	  if(state == 2 && count == 3){
+	  if(state == 2 && count == LED_YELLOW_TIME){
  800020e:	687b      	ldr	r3, [r7, #4]
  8000210:	2b02      	cmp	r3, #2
  8000212:	d106      	bne.n	8000222 <main+0xd6>
  8000214:	683b      	ldr	r3, [r7, #0]
- 8000216:	2b03      	cmp	r3, #3
+ 8000216:	2b02      	cmp	r3, #2
  8000218:	d103      	bne.n	8000222 <main+0xd6>
 		  state = 0; count = 0;
  800021a:	2300      	movs	r3, #0

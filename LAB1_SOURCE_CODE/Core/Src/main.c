@@ -107,23 +107,23 @@ int main(void)
 		  break;
 	  case 1:
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, SET);
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, RESET);
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, SET);
-		  break;
-	  case 2:
-		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, SET);
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, SET);
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, RESET);
 		  break;
+	  case 2:
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, SET);
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, RESET);
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, SET);
+		  break;
 	  }
 	  count++;
-	  if(state == 0 && count == 5){
+	  if(state == 0 && count == LED_RED_TIME){
 		  state = 1; count = 0;
 	  }
-	  if(state == 1 && count == 2){
+	  if(state == 1 && count == LED_GREEN_TIME){
 		  state = 2; count = 0;
 	  }
-	  if(state == 2 && count == 3){
+	  if(state == 2 && count == LED_YELLOW_TIME){
 		  state = 0; count = 0;
 	  }
 
