@@ -1,0 +1,53 @@
+diff a/LAB1_SOURCE_CODE/Core/Src/main.c b/LAB1_SOURCE_CODE/Core/Src/main.c	(rejected hunks)
+@@ -92,22 +92,41 @@
+   /* Infinite loop */
+   /* USER CODE BEGIN WHILE */
+ #define switched_count 2;
++#define LED_RED_TIME 5
++#define LED_YELLOW_TIME 2
++#define LED_GREEN_TIME 3
++  int state = 0;
+   int count = 0;
+-  int LED_PIN = 1;
+   while (1)
+   {
+-	  if(LED_PIN == 1){
+-		  HAL_GPIO_WritePin(GPIOA , GPIO_PIN_6, SET);
+-		  HAL_GPIO_WritePin(GPIOA , GPIO_PIN_5, RESET);
+-	  }
+-	  if(LED_PIN == 0){
+-		  HAL_GPIO_WritePin(GPIOA , GPIO_PIN_5, SET);
++	  switch(state){
++	  case 0:
++		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, RESET);
++		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, SET);
++		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, SET);
++		  break;
++	  case 1:
++		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, SET);
+ 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, RESET);
++		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, SET);
++		  break;
++	  case 2:
++		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, SET);
++		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, SET);
++		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, RESET);
++		  break;
++	  }
++	  count++;
++	  if(state == 0 && count == 5){
++		  state = 1; count = 0;
+ 	  }
+-	  if(++count == 2){
+-		  LED_PIN = 1 - LED_PIN;
+-		  count = 0;
++	  if(state == 1 && count == 2){
++		  state = 2; count = 0;
+ 	  }
++	  if(state == 2 && count == 3){
++		  state = 0; count = 0;
++	  }
++
+ 	  HAL_Delay(1000);
+     /* USER CODE END WHILE */
+ 
