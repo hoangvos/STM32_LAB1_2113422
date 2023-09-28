@@ -91,22 +91,33 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-#define switched_count 2;
-  int count = 0;
-  int LED_PIN = 1;
+  enum state_led{
+	  LED5_ON,
+	  LED6_ON
+  };
+  enum state_led current_state = LED5_ON;
+  int count = 2;
   while (1)
   {
-	  if(LED_PIN == 1){
-		  HAL_GPIO_WritePin(GPIOA , GPIO_PIN_6, SET);
-		  HAL_GPIO_WritePin(GPIOA , GPIO_PIN_5, RESET);
-	  }
-	  if(LED_PIN == 0){
-		  HAL_GPIO_WritePin(GPIOA , GPIO_PIN_5, SET);
+	  switch(current_state){
+	  case LED5_ON:
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, RESET);
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, SET);
+		  count--;
+		  if(count <= 0){
+			  count = 2;
+			  current_state = LED6_ON;
+		  }
+		  break;
+	  case LED6_ON:
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, SET);
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, RESET);
-	  }
-	  if(++count == 2){
-		  LED_PIN = 1 - LED_PIN;
-		  count = 0;
+		  count--;
+		  if(count <= 0){
+			  count = 2;
+			  current_state = LED5_ON;
+		  }
+		  break;
 	  }
 	  HAL_Delay(1000);
     /* USER CODE END WHILE */
