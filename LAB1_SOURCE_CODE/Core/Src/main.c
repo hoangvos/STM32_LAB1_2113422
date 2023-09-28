@@ -91,42 +91,50 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-#define switched_count 2;
 #define LED_RED_TIME 5
 #define LED_YELLOW_TIME 2
 #define LED_GREEN_TIME 3
-  int state = 0;
-  int count = 0;
+  enum state_led{
+	  LED_RED_ON,
+	  LED_GREEN_ON,
+	  LED_YELLOW_ON
+  };
+  int count = LED_RED_TIME;
+  enum state_led current_state = LED_RED_ON;
   while (1)
   {
-	  switch(state){
-	  case 0:
+	  switch(current_state){
+	  case LED_RED_ON:
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, RESET);
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, SET);
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, SET);
+		  count--;
+		  if(count <= 0){
+			  count = LED_GREEN_TIME;
+			  current_state = LED_GREEN_ON;
+		  }
 		  break;
-	  case 1:
+	  case LED_GREEN_ON:
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, SET);
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, SET);
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, RESET);
+		  count--;
+		  if(count <= 0){
+			  count = LED_YELLOW_TIME;
+			  current_state = LED_YELLOW_ON;
+		  }
 		  break;
-	  case 2:
+	  case LED_YELLOW_ON:
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, SET);
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, RESET);
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, SET);
+		  count--;
+		  if(count <= 0){
+			  count = LED_RED_TIME;
+			  current_state = LED_RED_ON;
+		  }
 		  break;
 	  }
-	  count++;
-	  if(state == 0 && count == LED_RED_TIME){
-		  state = 1; count = 0;
-	  }
-	  if(state == 1 && count == LED_GREEN_TIME){
-		  state = 2; count = 0;
-	  }
-	  if(state == 2 && count == LED_YELLOW_TIME){
-		  state = 0; count = 0;
-	  }
-
 	  HAL_Delay(1000);
     /* USER CODE END WHILE */
 
