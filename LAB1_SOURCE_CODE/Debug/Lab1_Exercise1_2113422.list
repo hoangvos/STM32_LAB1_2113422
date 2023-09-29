@@ -37,13 +37,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  16 .debug_macro  00015526  00000000  00000000  00024608  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   0000459f  00000000  00000000  00039b2e  2**0
+ 17 .debug_line   0000459d  00000000  00000000  00039b2e  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    00079792  00000000  00000000  0003e0cd  2**0
+ 18 .debug_str    00079792  00000000  00000000  0003e0cb  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000053  00000000  00000000  000b785f  2**0
+ 19 .comment      00000053  00000000  00000000  000b785d  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00000d58  00000000  00000000  000b78b4  2**2
+ 20 .debug_frame  00000d58  00000000  00000000  000b78b0  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -107,19 +107,16 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
  800015a:	f000 f84d 	bl	80001f8 <MX_GPIO_Init>
+  /* USER CODE BEGIN WHILE */
+
 #define LED_RED_TIME 5
 #define LED_YELLOW_TIME 2
 #define LED_GREEN_TIME 3
-  //int state = 0;
-  //int count = 0;
   int counter = 0;
  800015e:	2300      	movs	r3, #0
  8000160:	607b      	str	r3, [r7, #4]
-	  }
-	  if(state == 3 && count == LED_YELLOW_TIME){
-		  state = 0; count = 0;
-	  }
-	  */
+  while (1)
+  {
 	  if( counter >= 10) counter = 0;
  8000162:	687b      	ldr	r3, [r7, #4]
  8000164:	2b09      	cmp	r3, #9
