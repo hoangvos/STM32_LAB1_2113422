@@ -94,59 +94,78 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  int state = 0;
-  int countdown_a = LED_GREEN_TIME;
-  int countdown_b = LED_RED_TIME;
+#define LED_RED_TIME 5
+#define LED_GREEN_TIME 3
+#define LED_YELLOW_TIME 2
+
+  enum state_led{
+	  GREEN1_RED2,
+	  YELLOW1_RED2,
+	  RED1_GREEN2,
+	  RED1_YELLOW2
+  };
+  int count = LED_GREEN_TIME;
+  int light = LED_GREEN_TIME;
+  enum state_led current_state = GREEN1_RED2;
   while (1)
   {
-	  switch(state){
-	  case 0:
+	  display7SEG(light--);
+	  switch(current_state){
+	  case GREEN1_RED2:
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, RESET);
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, SET);
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, SET);
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, SET);
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, RESET);
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, SET);
-
+		  count--;
+		  if(count <= 0){
+			  count = LED_YELLOW_TIME;
+			  light = LED_YELLOW_TIME;
+			  current_state = YELLOW1_RED2;
+		  }
 		  break;
-	  case 1:
+	  case YELLOW1_RED2:
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, SET);
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, SET);
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, RESET);
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, SET);
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, RESET);
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, SET);
+		  count--;
+		  if(count <= 0){
+			  count = LED_GREEN_TIME;
+			  light = LED_RED_TIME;
+			  current_state = RED1_GREEN2;
+		  }
 		  break;
-	  case 2:
+	  case RED1_GREEN2:
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, SET);
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, RESET);
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, SET);
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, RESET);
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, SET);
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, SET);
+		  count--;
+		  if(count <= 0){
+			  count = LED_YELLOW_TIME;
+			  current_state = RED1_YELLOW2;
+		  }
 		  break;
-	  case 3:
+	  case RED1_YELLOW2:
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, SET);
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, RESET);
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, SET);
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, SET);
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, SET);
 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, RESET);
+		  count--;
+		  if(count <= 0){
+			  count = LED_GREEN_TIME;
+			  light = LED_GREEN_TIME;
+			  current_state = GREEN1_RED2;
+		  }
 		  break;
-	  }
-	  display7SEG(countdown_a--);
-	  countdown_b--;
-	  if(state == 0 && countdown_a == 0){
-		  state = 1; countdown_a = LED_YELLOW_TIME;
-	  }
-	  if(state == 1 && countdown_a == 0){
-		  state = 2; countdown_a = LED_RED_TIME; countdown_b = LED_GREEN_TIME;
-	  }
-	  if(state == 2 && countdown_b == 0){
-		  state = 3; countdown_b = LED_YELLOW_TIME;
-	  }
-	  if(state == 3 && countdown_b == 0){
-		  state = 0; countdown_a = LED_GREEN_TIME; countdown_b = LED_RED_TIME;
 	  }
 	  HAL_Delay(1000) ;
     /* USER CODE END WHILE */
